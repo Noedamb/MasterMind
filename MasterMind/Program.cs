@@ -52,13 +52,13 @@ namespace MasterMind
             switch (lettre)
             {
                 case 'b': return ConsoleColor.Blue;
-                case 'r': return ConsoleColor.Red;
+                case 'r': return ConsoleColor.DarkRed;
                 case 'n': return ConsoleColor.White;
                 case 'v': return ConsoleColor.Green;
                 case 'j': return ConsoleColor.Yellow;
-                case 'o': return ConsoleColor.White;
+                case 'o': return ConsoleColor.Red;
                 case 'g': return ConsoleColor.Gray;
-                default: return ConsoleColor.Black;
+                default: return ConsoleColor.White;
             }
         }
     }
