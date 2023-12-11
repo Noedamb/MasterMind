@@ -14,11 +14,12 @@ namespace MasterMind
 			Console.ForegroundColor = ConsoleColor.Yellow;Console.Write("Jaune(J) ");Console.ForegroundColor = ConsoleColor.DarkYellow;Console.Write("Orange(O) ");
 			Console.ForegroundColor = ConsoleColor.DarkGray;Console.WriteLine("Gris(G )");Console.ResetColor();
     		CaraValide(args);}
+    	
+    	// fonction caravalide
         public static void CaraValide(string[] args)
         {
             StringBuilder chaine = new StringBuilder("[-][-][-][-][-]"); // créé une chaine StringBuilder pour configurer une chaîne de caractères
             Regex regex = new Regex("[brnvjog]"); // Crée un Regex pour vérifier si des lettres correspondent dans "[brnvjog]".
-            Console.WriteLine("Saisir 5 couleur : "); // Affiche un message à l'utilisateur.
             int p = 0; // creer une variable pour compter le nombre de lettres valides saisies par l'utilisateur.
             char lettre; // Déclare une variable pour stocker la lettre saisie par l'utilisateur.
             do
@@ -46,7 +47,7 @@ namespace MasterMind
                         Console.Write(c);
                     }
                 }
-                Console.WriteLine(); // Passe à la ligne suivante.
+                Console.WriteLine();
             } while (p < 5);{
             	Console.Clear(); 
             	Joueur2(args, chaine.ToString().ToCharArray());
@@ -54,72 +55,44 @@ namespace MasterMind
         }
      public static void Joueur2(string[] args, char[] combinaison)
         {
-            Console.WriteLine("2ème joueur :                Bien placé                     Mal placé");
-            StringBuilder chaine2 = new StringBuilder("essaie : [-][-][-][-][-]        {X}                            {X}");
-            Regex regex2 = new Regex("[brnvjog]");
-            int p2 = 0;
-            char lettre2;
+     		Console.Write("Veuillir utiliser ces couleurs : ");
+			Console.ForegroundColor = ConsoleColor.Blue;Console.Write("Bleu(B) ");Console.ForegroundColor = ConsoleColor.DarkRed;Console.Write("Rouge(R) ");Console.ForegroundColor = ConsoleColor.White;Console.Write("Noir(N) ");Console.ForegroundColor = ConsoleColor.Green;Console.Write("Vert(V) ");
+			Console.ForegroundColor = ConsoleColor.Yellow;Console.Write("Jaune(J) ");Console.ForegroundColor = ConsoleColor.DarkYellow;Console.Write("Orange(O) ");Console.ForegroundColor = ConsoleColor.DarkGray;Console.WriteLine("Gris(G )");Console.ResetColor();
+			
+            StringBuilder chaine = new StringBuilder("essaie : [-][-][-][-][-]        Bien placé{X}                         Mal placé{X}");
+            Regex regex = new Regex("[brnvjog]");
+            int p = 0;
+            char lettre;
             char[] combinaisonEssaie = new char[5];
-
             do
-            {
-                lettre2 = Console.ReadKey().KeyChar;
-
-                if (regex2.IsMatch(lettre2.ToString()))
+            { lettre = Console.ReadKey().KeyChar;
+                if (regex.IsMatch(lettre.ToString()))
                 {
-                    int index2 = chaine2.ToString().IndexOf('-');
-                    if (index2 != -1)
+                    int index = chaine.ToString().IndexOf('-');
+                    if (index != -1)
                     {
-                        chaine2 = chaine2.Replace('-', lettre2, index2, 1);
-                        combinaisonEssaie[p2] = lettre2;
-                        p2++;
+                        chaine = chaine.Replace('-', lettre, index, 1);
+                        combinaisonEssaie[p] = lettre;
+                        p++;
                     }
                 }
-
                 Console.Clear();
-                foreach (char c in chaine2.ToString())
+                foreach (char c in chaine.ToString())
                 {
-                    if (regex2.IsMatch(c.ToString()))
+                    if (regex.IsMatch(c.ToString()))
                     {
                         Console.ForegroundColor = GetConsoleColor(c);
                         Console.Write(c);
                         Console.ResetColor();
                     }
                     else
-                    {
-                        Console.Write(c);
-                    }
+                    { Console.Write(c); }
                 }
                 Console.WriteLine();
-            } while (p2 < 5);
-
+            } while (p < 5);
             Console.Clear();
             CalculBpMp(combinaison, combinaisonEssaie);
         }
-
-      public static void CalculBpMp(char[] combinaison, char[] combinaisonEssaie)
-{
-    int bienPlaces = 0;
-    int malPlaces = 0;
-    int minLength = Math.Min(combinaison.Length, combinaisonEssaie.Length);
-
-    for (int i = 0; i < minLength; i++)
-    {
-        if (combinaison[i] == combinaisonEssaie[i])
-        {
-            bienPlaces++;
-        }
-        else if (Array.IndexOf(combinaison, combinaisonEssaie[i]) != -1)
-        {
-            malPlaces++;
-        }
-    }
-
-    Console.WriteLine("2ème joueur :" + "Bien placé : " + bienPlaces + "        Mal placé : " + malPlaces);
-    Console.ReadLine();
-}
-
-
         private static ConsoleColor GetConsoleColor(char lettre)
         {
             switch (lettre)
